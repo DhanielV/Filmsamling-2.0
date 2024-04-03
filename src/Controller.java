@@ -27,6 +27,7 @@ public class Controller {
     public ArrayList<Movie> searchDirector(String director) {
         return movieCollection.searchDirector(director);
     }
+
     public ArrayList<Movie> searchGenre(String genre) {
         return movieCollection.searchGenre(genre);
     }
