@@ -27,15 +27,31 @@ public class Movie {
         return director;
     }
 
+    public void setDirector(String newDirector) {
+        this.director = newDirector;
+    }
+
     public int getYear() {
         return year;
+    }
+
+    public void setYear(int newYear) {
+        this.year = newYear;
     }
 
     public int getMovieMinutes() {
         return movieMinutes;
     }
 
+    public void setMovieMinutes(int newMovieMinutes) {
+        this.movieMinutes = newMovieMinutes;
+    }
+
     public String getGenre() {
         return genre;
+    }
+
+    public void setGenre(String newGenre) {
+        this.genre = newGenre;
     }
 }

@@ -23,6 +23,7 @@ public class Controller {
         return movieCollection.searchTitle(title);
     }
 
+
     public ArrayList<Movie> searchDirector(String director) {
         return movieCollection.searchDirector(director);
     }

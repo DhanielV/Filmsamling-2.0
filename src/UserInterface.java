@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -9,12 +10,19 @@ public class UserInterface {
     private boolean running = true;
 
     public void startProgram() {
-        System.out.println("Film-Database:");
+        System.out.println("Movie database:");
 
         while (running) {
             displayMenu();
-            int valg = input.nextInt();
-            menuValg(valg);
+            try {
+
+
+                int choice = input.nextInt();
+                processChoice(choice);
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Type a number");
+                input.next();
+            }
         }
     }
 
@@ -22,30 +30,30 @@ public class UserInterface {
 
 
         System.out.println("Menu");
-        System.out.println("1. Ny film i database");
-        System.out.println("2. Se filmliste");
-        System.out.println("3. søg på filmtitel, instruktør eller genre");
-        System.out.println("4. Rediger i en filmtitel");
-        System.out.println("5. Fjern film");
-        System.out.println("6. Afslut programmet");
-        System.out.println("Skriv 1, 2, 3, 4, 5 eller 6: ");
+        System.out.println("1. Add new movie to database");
+        System.out.println("2. See movie list");
+        System.out.println("3. Search for title, director or genre");
+        System.out.println("4. Edit in movie");
+        System.out.println("5. Remove movie");
+        System.out.println("6. Exit");
+        System.out.println("Type 1, 2, 3, 4, 5 or 6: ");
     }
 
-    private void menuValg(int valg) {
-        switch (valg) {
+    private void processChoice(int choice) {
+        switch (choice) {
 
             case 1:
                 //Nye film
-                System.out.println("Indtast navn på film");
+                System.out.println("Type in title");
                 String title = input.next();
 
-                System.out.println("Indtast navn på instruktør");
+                System.out.println("Type in director name");
                 String director = input.next();
 
                 int year = 0;
                 boolean validYear = false;
                 while (!validYear) {
-                    System.out.println("Indtast udgivelsesår");
+                    System.out.println("Type in year");
                     if (input.hasNextInt()) {
                         year = input.nextInt();
                         validYear = true;
@@ -56,12 +64,12 @@ public class UserInterface {
                 }
 
 
-                int movieMinuttes = 0;
+                int movieMinutes = 0;
                 boolean validLength = false;
                 while (!validLength) {
-                    System.out.println("Filmlængde i min");
+                    System.out.println("Type in length in minuttes");
                     if (input.hasNextInt()) {
-                        movieMinuttes = input.nextInt();
+                        movieMinutes = input.nextInt();
                         validLength = true;
                     } else {
                         System.out.println("You must type a number try again");
@@ -74,62 +82,62 @@ public class UserInterface {
                 System.out.println("Genre");
                 String genre = input.next();
 
-                Movie movie = new Movie(title, director, year, movieMinuttes, genre); // Opretter en ny film med de indtastede oplysninger
+                Movie movie = new Movie(title, director, year, movieMinutes, genre); // Opretter en ny film med de indtastede oplysninger
 
                 controller.addMovie(movie); // Tilføjer den nye film til DB via controlleren
-                System.out.println("Film tilføjet: " + title + "\nInstruktør: " + director +
-                        "\nÅr: " + year + "\nVarighed: " + movieMinuttes + " minutter\nGenre: " + genre);
+                System.out.println("Movie added: " + title + "\nDirector: " + director +
+                        "\nYear: " + year + "\nDuration: " + movieMinutes + " minuttes\nGenre: " + genre);
                 break;
 
             case 2:
-                System.out.println("Liste over film i databasen:\n");
+                System.out.println("List of movies in database:\n");
                 String displayMovieList = controller.displayMovieList();
                 System.out.println(displayMovieList);
 
                 break;
 
             case 3:
-                System.out.println("Tast 1-3 for at vælge at søge på: \n 1. Titel \n 2. Instruktør \n 3. Genre ");
+                System.out.println("Type 1-3 to search for: \n 1. Title \n 2. Director \n 3. Genre ");
                 int searchChoice = input.nextInt();
                 switch (searchChoice) {
                     case 1:
-                        System.out.println("Indtast titel på film du søger");
+                        System.out.println("Type titel of movie");
                         String searchTitle = input.next();
                         Movie foundTitleMovie = controller.searchTitle(searchTitle);
                         if (foundTitleMovie != null) {
-                            System.out.println("Film fundet: " + foundTitleMovie.getTitle());
+                            System.out.println("Movie found: " + foundTitleMovie.getTitle());
 
                         } else {
-                            System.out.println("Ingen matchende film");
+                            System.out.println("No matching movies");
                         }
                         break;
                     case 2:
-                        System.out.println("Indtast instruktør");
+                        System.out.println("Enter director name");
 
                         String searchDirector = input.next();
                         ArrayList<Movie> foundDirectorMovies = controller.searchDirector(searchDirector);
                         if (foundDirectorMovies != null && !foundDirectorMovies.isEmpty()) {
-                            System.out.println("Film fundet med intruktør: " + searchDirector + ":");
+                            System.out.println("Movie(s) found by: " + searchDirector + ":");
                             for (Movie foundDirectorMovie : foundDirectorMovies) {
                                 System.out.println(foundDirectorMovie.getTitle());
                             }
                         } else {
-                            System.out.println("Ingen matchende film");
+                            System.out.println("No matching movies");
                         }
                         break;
 
 
                     case 3:
-                        System.out.println("Indtast genre");
+                        System.out.println("Enter genre");
                         String searchGenre = input.next();
                         ArrayList<Movie> foundGenreMovies = controller.searchGenre(searchGenre);
                         if (foundGenreMovies != null && !foundGenreMovies.isEmpty()) {
-                            System.out.println("Film fundet indenfor genren: " + searchGenre + ":");
+                            System.out.println("Movie(s) found with genre " + searchGenre + ":");
                             for (Movie foundGenreMovie : foundGenreMovies) {
                                 System.out.println(foundGenreMovie.getTitle());
                             }
                         } else {
-                            System.out.println("Ingen matchende film");
+                            System.out.println("No matching movies");
                         }
                         break;
                     default:
@@ -138,51 +146,88 @@ public class UserInterface {
                 break;
 
 
-                    case 4:
-                        System.out.println("Hvilken film skal redigeres?");
-                        controller.displayMovieList();
-                        System.out.println("Skriv navnet på film du vil omdøbe");
-                        String editTitle = input.next();
-                        Movie editMovie = controller.searchTitle(editTitle);
+            case 4:
 
-                        if (editMovie != null) {
-                            System.out.println("Ny ønskede titel");
-                            String newTitle = input.next();
-                            editMovie.setTitle(newTitle);
-                            System.out.println("Redigerer " + editTitle + " til: " + newTitle);
+
+                System.out.println("Enter name of movie you want to edit");
+                String editTitle = input.next();
+
+                Movie editMovie = controller.searchTitle(editTitle);
+
+                if (editMovie != null) {
+                    System.out.println("Enter new title");
+                    String newTitle = input.next();
+                    editMovie.setTitle(newTitle);
+
+                    System.out.println("Enter new name of director");
+                    String newDirector = input.next();
+                    editMovie.setDirector(newDirector);
+
+
+                    int newYear = 0;
+                    boolean validNewYear = false;
+                    while (!validNewYear) {
+                        System.out.println("Enter new release year");
+                        if (input.hasNextInt()) {
+                            newYear = input.nextInt();
+                            validNewYear = true;
                         } else {
-                            System.out.println("Film ikke fundet");
+                            System.out.println("You must type a number. Please try again.");
+                            input.next();
                         }
-                        break;
+                    }
+                    editMovie.setYear(newYear);
 
-
-                    case 5:
-                        System.out.println("Hvilken film skal slettes?");
-                        controller.displayMovieList();
-                        System.out.println("Skriv navnet på film du vil slette");
-                        String deleteTitle = input.next();
-                        Movie deleteMovie = controller.searchTitle(deleteTitle);
-                        if (deleteMovie != null) {
-                            controller.removeMovie(deleteMovie);
-                            System.out.println("Film slettet");
+                    int newMovieMinutes = 0;
+                    boolean validNewLength = false;
+                    while (!validNewLength) {
+                        System.out.println("Enter new movie length in minutes");
+                        if (input.hasNextInt()) {
+                            newMovieMinutes = input.nextInt();
+                            validNewLength = true;
                         } else {
-                            System.out.println("Film ikke fundet");
+                            System.out.println("You must type a number. Please try again.");
+                            input.next();
                         }
-                        break;
+                    }
+                    editMovie.setMovieMinutes(newMovieMinutes);
 
+                    System.out.println("Enter new name of Genre");
+                    String newGenre = input.next();
+                    editMovie.setGenre(newGenre);
 
-                    case 6:
-                        System.out.println("Nok filmdatabasering for i dag afslut");
-                        running = false; // Stopper while-løkken og dermed programmet
-                        break;
-
-                    default:
-                        System.out.println("Du SKAL skrive tal 1 eller 2. Prøv igen :)"); // Fejlbesked hvis brugeren ikke indtaster 1 eller 2
-                        break;
+                    System.out.println("Movie updated successfully.");
+                } else {
+                    System.out.println("Movie not found");
                 }
-        }
+                break;
 
+
+            case 5:
+
+                System.out.println("Enter name of movie you want to delete");
+                String deleteTitle = input.next();
+                Movie deleteMovie = controller.searchTitle(deleteTitle);
+                if (deleteMovie != null) {
+                    controller.removeMovie(deleteMovie);
+                    System.out.println("Movie deleted");
+                } else {
+                    System.out.println("Movie not found");
+                }
+                break;
+
+
+            case 6:
+                System.out.println("Exiting");
+                running = false; // Stopper while-løkken og dermed programmet
+                break;
+
+            default:
+                break;
+        }
     }
+
+}
 
 
 

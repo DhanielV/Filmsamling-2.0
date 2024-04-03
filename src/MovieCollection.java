@@ -9,7 +9,7 @@ public class MovieCollection {
     public String displayMovieList() {
         StringBuilder result = new StringBuilder();
         for (Movie movie : movies) {
-            result.append("Titel: ").append(movie.getTitle()).append("\n").append("Instruktør: ").append(movie.getDirector()).append("\n").append("År: ").append(movie.getYear()).append("\n").append("Varighed: ").append(movie.getMovieMinutes()).append(" minutter\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
+            result.append("Titel: ").append(movie.getTitle()).append("\n").append("Director: ").append(movie.getDirector()).append("\n").append("Year: ").append(movie.getYear()).append("\n").append("Duration: ").append(movie.getMovieMinutes()).append(" minuttes\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
         }
         return result.toString();
     }
@@ -30,6 +30,7 @@ public class MovieCollection {
         }
         return null;
     }
+
     public ArrayList<Movie> searchDirector(String director) {
         ArrayList<Movie> foundMovies = new ArrayList<>();//Søg på filmtitel
         for (Movie movie : movies) {
