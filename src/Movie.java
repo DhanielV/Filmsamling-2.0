@@ -1,4 +1,3 @@
-
 public class Movie {
     private String title; // Attribut for titel
     private String director; // Attribut for instruktør
@@ -7,7 +6,7 @@ public class Movie {
     private String genre; // Attribut for genre
 
     // Konstruktør til at initialisere en film med givne oplysninger
-    public Movie(String title, String director, int year, int movieMinutes, String genre){
+    public Movie(String title, String director, int year, int movieMinutes, String genre) {
         this.title = title;
         this.director = director;
         this.year = year;
@@ -18,6 +17,10 @@ public class Movie {
     // Getter-metoder for at få adgang til filmattributter
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String newTitle) {
+        this.title = newTitle;
     }
 
     public String getDirector() {
