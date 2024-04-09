@@ -4,7 +4,7 @@ package domainmodel;
 import java.util.ArrayList;
 
 public class MovieCollection {
-    private ArrayList<Movie> movies = new ArrayList<>(); // Array til at gemme film
+    private final ArrayList<Movie> movies = new ArrayList<>(); // Array til at gemme film
 
 
     public String displayMovieList() {

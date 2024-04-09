@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public class Controller {
     public final FileHandler fileHandler;
-    private MovieCollection movieCollection;
+    private final MovieCollection movieCollection;
+    private boolean changesMade = false;
 
 
     public Controller() { // Constructor
@@ -19,13 +20,15 @@ public class Controller {
 
     public void addMovie(Movie movie) {
         movieCollection.addMovie(movie); // Kalder addMovie metoden i movieCollection for at tilføje en ny film
+        changesMade = true;
 
 
     }
 
     public void saveMoviesOnExit() {
+        if(changesMade){
         ArrayList<Movie> moviesToSave = movieCollection.getMovies();
-        fileHandler.saveMovies(moviesToSave);
+        fileHandler.saveMovies(moviesToSave);}
 
     }
 
@@ -36,6 +39,7 @@ public class Controller {
 
     public void removeMovie(Movie movie) {
         movieCollection.removeMovie(movie);
+        changesMade = true;
     }
 
     public Movie searchTitle(String title) {

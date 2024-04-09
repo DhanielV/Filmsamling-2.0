@@ -32,9 +32,8 @@ public class FileHandler {
         return movies;
 
 
-
-
     }
+
     public void saveMovies(ArrayList<Movie> movies) {
         try (PrintStream output = new PrintStream(file)) {
             for (Movie movie : movies) {

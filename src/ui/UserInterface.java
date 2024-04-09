@@ -1,9 +1,7 @@
 package ui;
 
-import domainmodel.Movie;
 import controller.Controller;
-
-
+import domainmodel.Movie;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -35,7 +33,7 @@ public class UserInterface {
         }
     }
 
-    private void loadMoviesOnStart(){
+    private void loadMoviesOnStart() {
         controller.loadMovies();
     }
 
