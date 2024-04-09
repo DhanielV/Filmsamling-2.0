@@ -1,5 +1,6 @@
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
+package domainmodel;
+
+
 import java.util.ArrayList;
 
 public class MovieCollection {
@@ -17,14 +18,6 @@ public class MovieCollection {
     public void addMovie(Movie movie) throws RuntimeException {
         movies.add(movie);
 
-    }
-
-    public void saveMovies() throws FileNotFoundException {
-        try (PrintStream output = new PrintStream("movies.txt")) {
-            for (Movie movie : movies) {
-                output.println(movie.getTitle() + "," + movie.getDirector() + "," + movie.getYear() + "," + movie.getMovieMinutes() + "," + movie.getGenre());
-            }
-        }
     }
 
 
@@ -60,5 +53,9 @@ public class MovieCollection {
             }
         }
         return foundMovies;
+    }
+
+    public ArrayList<Movie> getMovies() {
+        return movies;
     }
 }

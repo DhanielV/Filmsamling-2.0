@@ -1,7 +1,14 @@
-import java.io.FileNotFoundException;
+package ui;
+
+import domainmodel.Movie;
+import controller.Controller;
+
+
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 
 public class UserInterface {
 

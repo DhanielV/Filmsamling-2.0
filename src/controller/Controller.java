@@ -1,4 +1,9 @@
-import java.io.File;
+package controller;
+
+import domainmodel.Movie;
+import domainmodel.MovieCollection;
+import domainsource.FileHandler;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -19,11 +24,8 @@ public class Controller {
     }
 
     public void saveMoviesOnExit() {
-        try {
-            movieCollection.saveMovies();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        ArrayList<Movie> moviesToSave = movieCollection.getMovies();
+        fileHandler.saveMovies(moviesToSave);
 
     }
 
@@ -48,13 +50,14 @@ public class Controller {
     public ArrayList<Movie> searchGenre(String genre) {
         return movieCollection.searchGenre(genre);
     }
-    public void loadMovies(){
+
+    public void loadMovies() {
         try {
             ArrayList<Movie> loadedMovies = fileHandler.loadMovies();
             for (Movie movie : loadedMovies) {
                 movieCollection.addMovie(movie);
             }
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             throw new RuntimeException("File not found: " + e.getMessage());
         }
     }

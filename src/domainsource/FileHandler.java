@@ -1,5 +1,10 @@
+package domainsource;
+
+import domainmodel.Movie;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,5 +35,13 @@ public class FileHandler {
 
 
     }
-
+    public void saveMovies(ArrayList<Movie> movies) {
+        try (PrintStream output = new PrintStream(file)) {
+            for (Movie movie : movies) {
+                output.println(movie.getTitle() + "," + movie.getDirector() + "," + movie.getYear() + "," + movie.getMovieMinutes() + "," + movie.getGenre());
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Error saving movies to file: " + e.getMessage());
+        }
+    }
 }

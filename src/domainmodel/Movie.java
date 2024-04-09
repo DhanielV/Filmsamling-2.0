@@ -1,3 +1,5 @@
+package domainmodel;
+
 public class Movie {
     private String title; // Attribut for titel
     private String director; // Attribut for instruktør
