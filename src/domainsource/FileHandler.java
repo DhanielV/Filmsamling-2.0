@@ -20,8 +20,8 @@ public class FileHandler {
                 String[] movieData = line.split(",");
                 String title = movieData[0];
                 String director = movieData[1];
-                int year = Integer.parseInt(movieData[2]);
-                int movieMinutes = Integer.parseInt(movieData[3]);
+                int year = Integer.parseInt(movieData[2].trim());
+                int movieMinutes = Integer.parseInt(movieData[3].trim());
                 String genre = movieData[4];
 
                 Movie movie = new Movie(title, director, year, movieMinutes, genre);

@@ -1,4 +1,12 @@
-rttt,tyu,201,222,qqwww
-eee,ewq,123,321,qwe
-rty,ewq,3333,545,qwe
-qqq,qwe,321,222,rty
+Shawshank Redemption,Frank Darabont,1994,142,Drama
+The Godfather,Francis Ford Coppola,1972,175,Crime
+Inception,Christopher Nolan,2010,148,Action
+Schindler's List,Steven Spielberg,1993,195,Biography
+Jurassic Park,Steven Spielberg,1993,127,Adventure
+Pulp Fiction,Quentin Tarantino,1994,154,Crime
+The Dark Knight,Christopher Nolan,2008,152,Action
+Matrix,Lana Wachowski,1999,136,Action
+Forrest Gump,Robert Zemeckis,1994,142,Drama
+Fight Club,David Fincher,1999,139,Drama
+Return of the King,Peter Jackson,2003,201,Adventure
+Titanic,James Cameron,1997,195,Drama

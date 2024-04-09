@@ -2,18 +2,25 @@ package domainmodel;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MovieCollection {
     private final ArrayList<Movie> movies = new ArrayList<>(); // Array til at gemme film
 
+    private final Comparator<Movie> titleComparator = new MovieTitleComparator();
+
 
     public String displayMovieList() {
+        Collections.sort(movies, titleComparator);
         StringBuilder result = new StringBuilder();
         for (Movie movie : movies) {
-            result.append("Titel: ").append(movie.getTitle()).append("\n").append("Director: ").append(movie.getDirector()).append("\n").append("Year: ").append(movie.getYear()).append("\n").append("Duration: ").append(movie.getMovieMinutes()).append(" minuttes\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
+            result.append("Title: ").append(movie.getTitle()).append("\n").append("Director: ").append(movie.getDirector()).append("\n").append("Year: ").append(movie.getYear()).append("\n").append("Duration: ").append(movie.getMovieMinutes()).append(" minuttes\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
+
         }
         return result.toString();
     }
+
 
     public void addMovie(Movie movie) throws RuntimeException {
         movies.add(movie);
