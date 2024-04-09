@@ -1,9 +1,9 @@
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class MovieCollection {
     private ArrayList<Movie> movies = new ArrayList<>(); // Array til at gemme film
-    private String fileName = "movies.txt";
-
 
 
     public String displayMovieList() {
@@ -14,9 +14,19 @@ public class MovieCollection {
         return result.toString();
     }
 
-    public void addMovie(Movie movie) {
+    public void addMovie(Movie movie) throws RuntimeException {
         movies.add(movie);
+
     }
+
+    public void saveMovies() throws FileNotFoundException {
+        try (PrintStream output = new PrintStream("movies.txt")) {
+            for (Movie movie : movies) {
+                output.println(movie.getTitle() + "," + movie.getDirector() + "," + movie.getYear() + "," + movie.getMovieMinutes() + "," + movie.getGenre());
+            }
+        }
+    }
+
 
     public void removeMovie(Movie movieToRemove) {
         movies.remove(movieToRemove);
@@ -51,4 +61,4 @@ public class MovieCollection {
         }
         return foundMovies;
     }
-    }
+}

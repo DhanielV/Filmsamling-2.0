@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ public class UserInterface {
     private boolean running = true;
 
     public void startProgram() {
+        loadMoviesOnStart();
         System.out.println("Movie database:");
 
         while (running) {
@@ -26,6 +28,10 @@ public class UserInterface {
         }
     }
 
+    private void loadMoviesOnStart(){
+        controller.loadMovies();
+    }
+
     private void displayMenu() {
 
 
@@ -35,8 +41,20 @@ public class UserInterface {
         System.out.println("3. Search for title, director or genre");
         System.out.println("4. Edit in movie");
         System.out.println("5. Remove movie");
-        System.out.println("6. Exit");
+        System.out.println("6. Exit and save");
         System.out.println("Type 1, 2, 3, 4, 5 or 6: ");
+    }
+
+    public void exit() {
+        System.out.println("Exiting...");
+        running = false; // Stopper while-løkken og dermed programmet
+
+    }
+
+    private void exitSave() {
+        System.out.println("Saving...");
+        controller.saveMoviesOnExit();
+        exit();
     }
 
     private void processChoice(int choice) {
@@ -46,10 +64,9 @@ public class UserInterface {
             case 3 -> searchMovies();
             case 4 -> editMovie();
             case 5 -> removeMovie();
-            case 6 -> {
-                System.out.println("Exiting");
-                running = false; // Stopper while-løkken og dermed programmet
-            }
+            case 6 -> exitSave();
+
+
             default -> {
             }
         }
