@@ -26,9 +26,10 @@ public class Controller {
     }
 
     public void saveMoviesOnExit() {
-        if(changesMade){
-        ArrayList<Movie> moviesToSave = movieCollection.getMovies();
-        fileHandler.saveMovies(moviesToSave);}
+        if (changesMade) {
+            ArrayList<Movie> moviesToSave = movieCollection.getMovies();
+            fileHandler.saveMovies(moviesToSave);
+        }
 
     }
 
@@ -36,6 +37,27 @@ public class Controller {
     public String displayMovieList() {
         return movieCollection.displayMovieList();
     }
+
+    public String displayMovieListSortTitleAlphabetically() {
+        return movieCollection.displayMovieListSortTitleAlphabetically();
+    }
+
+    public String displayMovieListSortDirectorAlphabetically() {
+        return movieCollection.displayMovieListSortDirectorAlphabetically();
+    }
+
+    public String displayMovieListSortMovieMinutesAscending() {
+        return movieCollection.displayMovieListSortMovieMinutesAscending();
+    }
+
+    public String displayMovieListSortYearAscending() {
+        return movieCollection.displayMovieListSortYearAscending();
+    }
+
+    public String displayMovieListSortGenreAlphabetically() {
+        return movieCollection.displayMovieListSortGenreAlphabetically();
+    }
+
 
     public void removeMovie(Movie movie) {
         movieCollection.removeMovie(movie);
