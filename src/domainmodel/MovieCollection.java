@@ -17,6 +17,10 @@ public class MovieCollection {
 
 
     public String displayMovieList() {
+        return generateMovieListString();
+    }
+
+    private String generateMovieListString() {
         StringBuilder result = new StringBuilder();
         for (Movie movie : movies) {
             result.append("Title: ").append(movie.getTitle()).append("\n").append("Director: ").append(movie.getDirector()).append("\n").append("Year: ").append(movie.getYear()).append("\n").append("Duration: ").append(movie.getMovieMinutes()).append(" minuttes\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
@@ -27,52 +31,27 @@ public class MovieCollection {
 
     public String displayMovieListSortTitleAlphabetically() {
         Collections.sort(movies, movieTitleComparator);
-        StringBuilder result = new StringBuilder();
-        for (Movie movie : movies) {
-            result.append("Title: ").append(movie.getTitle()).append("\n").append("Director: ").append(movie.getDirector()).append("\n").append("Year: ").append(movie.getYear()).append("\n").append("Duration: ").append(movie.getMovieMinutes()).append(" minuttes\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
-
-        }
-        return result.toString();
+        return generateMovieListString();
     }
 
     public String displayMovieListSortDirectorAlphabetically() {
         Collections.sort(movies, movieDirectorComparator);
-        StringBuilder result = new StringBuilder();
-        for (Movie movie : movies) {
-            result.append("Title: ").append(movie.getTitle()).append("\n").append("Director: ").append(movie.getDirector()).append("\n").append("Year: ").append(movie.getYear()).append("\n").append("Duration: ").append(movie.getMovieMinutes()).append(" minuttes\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
-
-        }
-        return result.toString();
+        return generateMovieListString();
     }
 
     public String displayMovieListSortMovieMinutesAscending(){
         Collections.sort(movies, moveMinutesComparator);
-        StringBuilder result = new StringBuilder();
-        for (Movie movie : movies) {
-            result.append("Title: ").append(movie.getTitle()).append("\n").append("Director: ").append(movie.getDirector()).append("\n").append("Year: ").append(movie.getYear()).append("\n").append("Duration: ").append(movie.getMovieMinutes()).append(" minuttes\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
-
-        }
-        return result.toString();
+        return generateMovieListString();
     }
 
     public String displayMovieListSortYearAscending(){
         Collections.sort(movies, movieYearComparator);
-        StringBuilder result = new StringBuilder();
-        for (Movie movie : movies) {
-            result.append("Title: ").append(movie.getTitle()).append("\n").append("Director: ").append(movie.getDirector()).append("\n").append("Year: ").append(movie.getYear()).append("\n").append("Duration: ").append(movie.getMovieMinutes()).append(" minuttes\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
-
-        }
-        return result.toString();
+        return generateMovieListString();
     }
 
     public String displayMovieListSortGenreAlphabetically(){
         Collections.sort(movies, movieGenreComparator);
-        StringBuilder result = new StringBuilder();
-        for (Movie movie : movies) {
-            result.append("Title: ").append(movie.getTitle()).append("\n").append("Director: ").append(movie.getDirector()).append("\n").append("Year: ").append(movie.getYear()).append("\n").append("Duration: ").append(movie.getMovieMinutes()).append(" minuttes\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
-
-        }
-        return result.toString();
+        return generateMovieListString();
     }
 
 

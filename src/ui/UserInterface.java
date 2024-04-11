@@ -25,7 +25,7 @@ public class UserInterface {
 
 
                 int choice = input.nextInt();
-                processChoice(choice);
+                processMainMenuChoice(choice);
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Type a number");
                 input.next();
@@ -40,14 +40,15 @@ public class UserInterface {
     private void displayMenu() {
 
 
-        System.out.println("Menu");
-        System.out.println("1. Add new movie to database");
-        System.out.println("2. See movie list");
-        System.out.println("3. Search for title, director or genre");
-        System.out.println("4. Edit in movie");
-        System.out.println("5. Remove movie");
-        System.out.println("6. Exit and save");
-        System.out.println("Type 1, 2, 3, 4, 5 or 6: ");
+        System.out.println("""
+                Menu\s
+                1. Add new movie to database\s
+                2. See movie list\s
+                3. Search for title, director or genre\s
+                4. Edit in movie\s
+                5. Remove movie\s
+                6. Exit and save\s
+                Type 1, 2, 3, 4, 5 or 6:\s""");
     }
 
     public void exit() {
@@ -58,11 +59,11 @@ public class UserInterface {
 
     private void exitSave() {
         System.out.println("Saving...");
-        controller.saveMoviesOnExit();
+        controller.saveMovies();
         exit();
     }
 
-    private void processChoice(int choice) {
+    private void processMainMenuChoice(int choice) {
         switch (choice) {
             case 1 -> addNewMovie();
             case 2 -> sortOptions();
@@ -125,90 +126,96 @@ public class UserInterface {
 
     }
 
-    public void displayMovieList() {
-        System.out.println("List of unsorted movies in database:\n");
-        String displayMovieList = controller.displayMovieList();
-        System.out.println(displayMovieList);
-    }
+    public void sortOptions() {
 
-    public void displayMovieListSortTitleAlphabetically(){
-        System.out.println("List of movies sorted alphabetically by title:\n");
-        String displayMovieListSortTitleAlphabetically = controller.displayMovieListSortTitleAlphabetically();
-        System.out.println(displayMovieListSortTitleAlphabetically);
-
-    }
-    public void displayMovieListSortDirectorAlphabetically(){
-        System.out.println("Movie list sorted alphabetically by director: \n ");
-        String displayMovieListSortDirectorAlphabetically = controller.displayMovieListSortDirectorAlphabetically();
-        System.out.println(displayMovieListSortDirectorAlphabetically);
+        System.out.println("""
+                How would you like to sort the movie list?\s
+                 1. Don't sort\s
+                 2. Sort title alphabetically
+                 3. Sort director alphabetically
+                 4. Sort by movie minutes in ascending order
+                 5. Sort by year in ascending order
+                 6. Sort by genre alphabetically""");
 
 
+        int sortChoice;
+        boolean validSortChoice = false;
+        while (!validSortChoice) {
+            if (input.hasNextInt()){
+                sortChoice = input.nextInt();
+                validSortChoice = true;
 
-    }
-    public void displayMovieListSortMovieMinutesAscending(){
-        System.out.println("Movie list sorted by movie minutes in ascending order: \n");
-        String displayMovieListSortMovieMinutesAscending = controller.displayMovieListSortMovieMinutesAscending();
-        System.out.println(displayMovieListSortMovieMinutesAscending);
-    }
-    public void displayMovieListSortYearAscending(){
-        System.out.println("Movie list sorted by year in ascending order: \n");
-        String displayMovieListSortYearAscending = controller.displayMovieListSortYearAscending();
-        System.out.println(displayMovieListSortYearAscending);
-    }
+            switch (sortChoice) {
+                case 1:
+                    displayMovieListSort("unsorted");
+                    break;
+                case 2:
+                    displayMovieListSort("title");
+                    break;
+                case 3:
+                    displayMovieListSort("director");
+                    break;
+                case 4:
+                    displayMovieListSort("movieMinutes");
+                    break;
+                case 5:
+                    displayMovieListSort("year");
+                    break;
+                case 6:
+                    displayMovieListSort("genre");
+                    break;
+                default:
+                    break;
+            }
 
-    public void displayMovieListSortGenreAlphabetically() {
-        System.out.println("Movie list sorted alphabetically by genre: \n ");
-        String displayMovieListSortGenreAlphabetically = controller.displayMovieListSortGenreAlphabetically();
-        System.out.println(displayMovieListSortGenreAlphabetically);
-    }
-
-
-
-    public void sortOptions(){
-
-        System.out.println("How would you like to sort the movie list? " +
-                "\n 1. Don't sort " +
-                "\n 2. Sort title alphabetically" +
-                "\n 3. Sort director alphabetically" +
-                "\n 4. Sort by movie minutes in ascending order" +
-                "\n 5. Sort by year in ascending order" +
-                "\n 6. Sort by genre alphabetically");
-        int sortChoice = input.nextInt();
-        switch (sortChoice){
-            case 1:
-                displayMovieList();
-                break;
-            case 2:
-                displayMovieListSortTitleAlphabetically();
-                break;
-            case 3:
-                displayMovieListSortDirectorAlphabetically();
-                break;
-            case 4:
-                displayMovieListSortMovieMinutesAscending();
-                break;
-            case 5:
-                displayMovieListSortYearAscending();
-                break;
-            case 6:
-                displayMovieListSortGenreAlphabetically();
-                break;
-
-
-            default:
-
-
+            }else
+                System.out.println("You must enter a number");
+            input.nextLine();
         }
+    }
 
+
+    public void displayMovieListSort(String sortBy){
+        String message;
+        switch (sortBy){
+            case "unsorted":
+                message = "List of movies unsorted";
+                System.out.println(message + controller.displayMovieList());
+                break;
+
+            case "title":
+                message = "List of movies sorted alphabetically by title:\n";
+                System.out.println(message + controller.displayMovieListSortTitleAlphabetically());
+                break;
+            case "director":
+                message = "Movie list sorted alphabetically by director: \n ";
+                System.out.println(message + controller.displayMovieListSortDirectorAlphabetically());
+                break;
+            case "movieMinutes":
+                message = "Movie list sorted by movie minutes in ascending order: \n";
+                System.out.println(message + controller.displayMovieListSortMovieMinutesAscending());
+                break;
+            case "year":
+                message = "Movie list sorted by year in ascending order: \n";
+                System.out.println(message + controller.displayMovieListSortYearAscending());
+                break;
+            case "genre":
+                message = "Movie list sorted alphabetically by genre: \n ";
+                System.out.println(message + controller.displayMovieListSortGenreAlphabetically());
+                break;
+            default:
+                break;
+        }
     }
 
     public void searchMovies() {
         System.out.println("Enter 1-3 to search for: \n 1. Title \n 2. Director \n 3. Genre ");
         int searchChoice = input.nextInt();
+        input.nextLine();
         switch (searchChoice) {
             case 1:
-                System.out.println("Enter titel of movie");
-                String searchTitle = input.next();
+                System.out.println("Enter title of movie");
+                String searchTitle = input.nextLine();
                 Movie foundTitleMovie = controller.searchTitle(searchTitle);
                 if (foundTitleMovie != null) {
                     System.out.println("Movie found: " + foundTitleMovie.getTitle());
@@ -220,7 +227,7 @@ public class UserInterface {
             case 2:
                 System.out.println("Enter director name");
 
-                String searchDirector = input.next();
+                String searchDirector = input.nextLine();
                 ArrayList<Movie> foundDirectorMovies = controller.searchDirector(searchDirector);
                 if (foundDirectorMovies != null && !foundDirectorMovies.isEmpty()) {
                     System.out.println("Movie(s) found by: " + searchDirector + ":");
@@ -235,7 +242,7 @@ public class UserInterface {
 
             case 3:
                 System.out.println("Enter genre");
-                String searchGenre = input.next();
+                String searchGenre = input.nextLine();
                 ArrayList<Movie> foundGenreMovies = controller.searchGenre(searchGenre);
                 if (foundGenreMovies != null && !foundGenreMovies.isEmpty()) {
                     System.out.println("Movie(s) found with genre " + searchGenre + ":");
@@ -301,6 +308,10 @@ public class UserInterface {
             System.out.println("Enter new name of Genre");
             String newGenre = input.next();
             editMovie.setGenre(newGenre);
+
+            controller.movieEdited();
+
+            controller.saveMovies();
 
             System.out.println("Movie updated successfully.");
         } else {

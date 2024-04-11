@@ -24,8 +24,11 @@ public class Controller {
 
 
     }
+    public void movieEdited(){
+        changesMade = true;
+    }
 
-    public void saveMoviesOnExit() {
+    public void saveMovies() {
         if (changesMade) {
             ArrayList<Movie> moviesToSave = movieCollection.getMovies();
             fileHandler.saveMovies(moviesToSave);
