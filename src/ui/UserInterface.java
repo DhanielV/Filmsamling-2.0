@@ -4,6 +4,7 @@ import controller.Controller;
 import domainmodel.Movie;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -141,72 +142,101 @@ public class UserInterface {
         int sortChoice;
         boolean validSortChoice = false;
         while (!validSortChoice) {
-            if (input.hasNextInt()){
+            if (input.hasNextInt()) {
                 sortChoice = input.nextInt();
                 validSortChoice = true;
 
-            switch (sortChoice) {
-                case 1:
-                    displayMovieListSort("unsorted");
-                    break;
-                case 2:
-                    displayMovieListSort("title");
-                    break;
-                case 3:
-                    displayMovieListSort("director");
-                    break;
-                case 4:
-                    displayMovieListSort("movieMinutes");
-                    break;
-                case 5:
-                    displayMovieListSort("year");
-                    break;
-                case 6:
-                    displayMovieListSort("genre");
-                    break;
-                default:
-                    break;
+                Comparator<Movie> primaryComparator = null;
+                Comparator<Movie> secondaryComparator = null;
+
+                switch (sortChoice) {
+                    case 1:
+                        displaUnySortedMovies();
+
+                        break;
+                    case 2:
+                        primaryComparator = controller.getMovieTitleComparator();
+                        break;
+                    case 3:
+                        primaryComparator = controller.getMovieDirectorComparator();
+                        break;
+                    case 4:
+                        primaryComparator = controller.getMoveMinutesComparator();
+                        break;
+                    case 5:
+                        primaryComparator = controller.getMovieYearComparator();
+                        break;
+                    case 6:
+                        primaryComparator = controller.getMovieGenreComparator();
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter a number between 1 and 6.");
+                        validSortChoice = false; // Set to false to repeat the loop
+                        break;
+                }
+
+                if (primaryComparator != null) {
+                    System.out.println("Do you want to add a secondary sort attribute? (y/n)");
+                    String secondaryChoice = input.next().toLowerCase();
+                    if (secondaryChoice.equals("y")) {
+                        System.out.println("Choose a secondary sort attribute:");
+                        System.out.println("""
+                Second sort attribute?\s
+                 1. Don't sort\s
+                 2. Sort title alphabetically
+                 3. Sort director alphabetically
+                 4. Sort by movie minutes in ascending order
+                 5. Sort by year in ascending order
+                 6. Sort by genre alphabetically""");
+
+
+                        int secondarySortChoice = input.nextInt();
+                        switch (secondarySortChoice) {
+                            case 2:
+                                secondaryComparator = controller.getMovieTitleComparator();
+                                break;
+                            case 3:
+                                secondaryComparator = controller.getMovieDirectorComparator();
+                                break;
+                            case 4:
+                                secondaryComparator = controller.getMoveMinutesComparator();
+                                break;
+                            case 5:
+                                secondaryComparator = controller.getMovieYearComparator();
+                                break;
+                            case 6:
+                                secondaryComparator = controller.getMovieGenreComparator();
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Secondary sort attribute ignored.");
+                                break;
+                        }
+                    }
+
+                    // Display sorted movies with primary and secondary sort attributes
+                    if (secondaryComparator != null) {
+                        displaySortedMovies(primaryComparator.thenComparing(secondaryComparator));
+                    } else {
+                        displaySortedMovies(primaryComparator);
+                    }
+                }
+
+            } else {
+                System.out.println("You must must enter a number");
+                input.nextLine();
             }
-
-            }else
-                System.out.println("You must enter a number");
-            input.nextLine();
         }
+
     }
 
-
-    public void displayMovieListSort(String sortBy){
-        String message;
-        switch (sortBy){
-            case "unsorted":
-                message = "List of movies unsorted";
-                System.out.println(message + controller.displayMovieList());
-                break;
-
-            case "title":
-                message = "List of movies sorted alphabetically by title:\n";
-                System.out.println(message + controller.displayMovieListSortTitleAlphabetically());
-                break;
-            case "director":
-                message = "Movie list sorted alphabetically by director: \n ";
-                System.out.println(message + controller.displayMovieListSortDirectorAlphabetically());
-                break;
-            case "movieMinutes":
-                message = "Movie list sorted by movie minutes in ascending order: \n";
-                System.out.println(message + controller.displayMovieListSortMovieMinutesAscending());
-                break;
-            case "year":
-                message = "Movie list sorted by year in ascending order: \n";
-                System.out.println(message + controller.displayMovieListSortYearAscending());
-                break;
-            case "genre":
-                message = "Movie list sorted alphabetically by genre: \n ";
-                System.out.println(message + controller.displayMovieListSortGenreAlphabetically());
-                break;
-            default:
-                break;
-        }
+    private void displaUnySortedMovies() {
+        System.out.println(controller.displayUnMovieListSort());
     }
+
+    private void displaySortedMovies(Comparator<Movie> comparator){
+        System.out.println(controller.displayMovieListSort(comparator));
+    }
+
 
     public void searchMovies() {
         System.out.println("Enter 1-3 to search for: \n 1. Title \n 2. Director \n 3. Genre ");

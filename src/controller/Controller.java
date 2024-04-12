@@ -1,16 +1,72 @@
 package controller;
 
-import domainmodel.Movie;
-import domainmodel.MovieCollection;
+import domainmodel.*;
 import domainsource.FileHandler;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Controller {
     public final FileHandler fileHandler;
     private final MovieCollection movieCollection;
     private boolean changesMade = false;
+
+    private final Comparator<Movie> movieTitleComparator = new MovieTitleComparator();
+    private final Comparator<Movie> movieDirectorComparator = new MovieDirectorComparator();
+    private final Comparator<Movie> moveMinutesComparator = new MovieMovieMinutesComparator();
+    private final Comparator<Movie> movieYearComparator = new MovieYearComparator();
+    private final Comparator<Movie> movieGenreComparator = new MovieGenreComparator();
+
+
+
+
+
+
+
+
+
+    private String generateMovieListString() {
+        StringBuilder result = new StringBuilder();
+        ArrayList<Movie> movies = movieCollection.getMovies();
+        for (Movie movie : movies) {
+            result.append("Title: ").append(movie.getTitle()).append("\n").append("Director: ").append(movie.getDirector()).append("\n").append("Year: ").append(movie.getYear()).append("\n").append("Duration: ").append(movie.getMovieMinutes()).append(" minuttes\n").append("Genre: ").append(movie.getGenre()).append("\n\n");
+
+        }
+        return result.toString();
+    }
+
+
+    public String displayMovieListSort(Comparator<Movie> comparator) {
+        ArrayList<Movie> movies = movieCollection.getMovies();
+        sortMovies(movies, comparator);
+        return generateMovieListString();
+    }
+
+    private void sortMovies(ArrayList<Movie> movies, Comparator<Movie> comparator) {
+        Collections.sort(movies, comparator);
+    }
+    public Comparator<Movie> getMovieTitleComparator(){
+        return movieTitleComparator;
+    }
+
+    public Comparator<Movie> getMovieDirectorComparator() {
+        return movieDirectorComparator;
+    }
+
+    public Comparator<Movie> getMoveMinutesComparator() {
+        return moveMinutesComparator;
+    }
+
+    public Comparator<Movie> getMovieYearComparator() {
+        return movieYearComparator;
+    }
+
+    public Comparator<Movie> getMovieGenreComparator() {
+        return movieGenreComparator;
+    }
+
 
 
     public Controller() { // Constructor
@@ -37,29 +93,7 @@ public class Controller {
     }
 
 
-    public String displayMovieList() {
-        return movieCollection.displayMovieList();
-    }
 
-    public String displayMovieListSortTitleAlphabetically() {
-        return movieCollection.displayMovieListSortTitleAlphabetically();
-    }
-
-    public String displayMovieListSortDirectorAlphabetically() {
-        return movieCollection.displayMovieListSortDirectorAlphabetically();
-    }
-
-    public String displayMovieListSortMovieMinutesAscending() {
-        return movieCollection.displayMovieListSortMovieMinutesAscending();
-    }
-
-    public String displayMovieListSortYearAscending() {
-        return movieCollection.displayMovieListSortYearAscending();
-    }
-
-    public String displayMovieListSortGenreAlphabetically() {
-        return movieCollection.displayMovieListSortGenreAlphabetically();
-    }
 
 
     public void removeMovie(Movie movie) {
@@ -89,5 +123,10 @@ public class Controller {
         } catch (FileNotFoundException e) {
             throw new RuntimeException("File not found: " + e.getMessage());
         }
+    }
+
+
+    public String displayUnMovieListSort() {
+        return generateMovieListString();
     }
 }
